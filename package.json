@@ -1,92 +1,97 @@
 {
-    "name": "wretch",
-    "version": "1.7.4",
-    "description": "A tiny wrapper built around fetch with an intuitive syntax.",
-    "keywords": [
-        "wretch",
-        "fetch",
-        "ajax",
-        "request"
+  "name": "wretch",
+  "version": "1.7.4",
+  "description": "A tiny wrapper built around fetch with an intuitive syntax.",
+  "keywords": [
+    "wretch",
+    "fetch",
+    "ajax",
+    "request"
+  ],
+  "homepage": "https://elbywan.github.io/wretch",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elbywan/wretch"
+  },
+  "bugs": {
+    "url": "https://github.com/elbywan/wretch/issues"
+  },
+  "main": "./dist/bundle/wretch.js",
+  "module": "./dist/index.js",
+  "jsnext:main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "npm run build && npm run test",
+    "lint": "eslint ./src/**/*.{js,jsx,ts,tsx}",
+    "fix": "eslint --fix ./src/**/*.{js,jsx,ts,tsx}",
+    "prebuild": "rimraf dist && rimraf coverage && npm run lint",
+    "build": "tsc -p . && rollup -c && rollup -c --format esm -o dist/bundle/wretch.esm.js",
+    "mock": "node scripts/mockServer.js",
+    "test": "concurrently --success first -k jest \"npm run mock\"",
+    "test-browsers": "rollup -c -o test/browser/src/wretch.min.js && concurrently -s first -k browserstack-runner \"npm run mock\"",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
+    "changelog": "conventional-changelog -p wretch -i CHANGELOG.md -s -r 0"
+  },
+  "author": "Julien Elbaz",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/form-data": "^2.5.0",
+    "@types/jest": "^26.0.3",
+    "@types/node": "^14.0.14",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "abortcontroller-polyfill": "^1.5.0",
+    "browserstack-runner": "^0.9.3",
+    "concurrently": "^5.2.0",
+    "conventional-changelog-cli": "^2.0.34",
+    "conventional-changelog-wretch": "file:scripts/conventional-changelog-wretch",
+    "coveralls": "^3.1.0",
+    "dtrace-provider": "^0.8.8",
+    "eslint": "^7.12.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "form-data": "^3.0.0",
+    "jest": "^26.1.0",
+    "node-fetch": "^2.6.0",
+    "prettier": "^2.1.2",
+    "restify": "^8.5.1",
+    "restify-cors-middleware": "^1.1.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.18.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript": "^1.0.1",
+    "ts-jest": "^26.1.1",
+    "tslib": "^2.0.0",
+    "typescript": "^4.0.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
     ],
-    "homepage": "https://elbywan.github.io/wretch",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/elbywan/wretch"
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "test/tsconfig.tests.json"
+      }
     },
-    "bugs": {
-        "url": "https://github.com/elbywan/wretch/issues"
-    },
-    "main": "./dist/bundle/wretch.js",
-    "module": "./dist/index.js",
-    "jsnext:main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "files": [
-        "dist"
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/*.{js,ts}"
     ],
-    "scripts": {
-        "start": "npm run build && npm run test",
-        "lint": "tslint -p tsconfig.json -t codeFrame",
-        "fix": "tslint --fix -p tsconfig.json -t codeFrame",
-        "prebuild": "rimraf dist && rimraf coverage && npm run lint",
-        "build": "tsc -p . && rollup -c && rollup -c --format esm -o dist/bundle/wretch.esm.js",
-        "mock": "node scripts/mockServer.js",
-        "test": "concurrently --success first -k jest \"npm run mock\"",
-        "test-browsers": "rollup -c -o test/browser/src/wretch.min.js && concurrently -s first -k browserstack-runner \"npm run mock\"",
-        "coverage": "cat ./coverage/lcov.info | coveralls",
-        "changelog": "conventional-changelog -p wretch -i CHANGELOG.md -s -r 0"
-    },
-    "author": "Julien Elbaz",
-    "license": "MIT",
-    "devDependencies": {
-        "@types/form-data": "^2.5.0",
-        "@types/jest": "^26.0.3",
-        "@types/node": "^14.0.14",
-        "abortcontroller-polyfill": "^1.5.0",
-        "browserstack-runner": "^0.9.3",
-        "concurrently": "^5.2.0",
-        "conventional-changelog-cli": "^2.0.34",
-        "conventional-changelog-wretch": "file:scripts/conventional-changelog-wretch",
-        "coveralls": "^3.1.0",
-        "dtrace-provider": "^0.8.8",
-        "form-data": "^3.0.0",
-        "jest": "^26.1.0",
-        "node-fetch": "^2.6.0",
-        "restify": "^8.5.1",
-        "restify-cors-middleware": "^1.1.1",
-        "rimraf": "^3.0.2",
-        "rollup": "^2.18.1",
-        "rollup-plugin-node-resolve": "^5.2.0",
-        "rollup-plugin-terser": "^7.0.2",
-        "rollup-plugin-typescript": "^1.0.1",
-        "ts-jest": "^26.1.1",
-        "tslib": "^2.0.0",
-        "tslint": "^6.1.2",
-        "typescript": "^4.0.3"
-    },
-    "jest": {
-        "transform": {
-            "^.+\\.tsx?$": "ts-jest"
-        },
-        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json"
-        ],
-        "globals": {
-            "ts-jest": {
-                "tsConfig": "test/tsconfig.tests.json"
-            }
-        },
-        "collectCoverage": true,
-        "collectCoverageFrom": [
-            "src/*.{js,ts}"
-        ],
-        "coveragePathIgnorePatterns": [
-            "src/index.umd.ts"
-        ]
-    },
-    "dependencies": {}
+    "coveragePathIgnorePatterns": [
+      "src/index.umd.ts"
+    ]
+  },
+  "dependencies": {}
 }

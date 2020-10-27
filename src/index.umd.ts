@@ -1,9 +1,11 @@
-import { Wretcher } from "./wretcher"
+import { Wretcher } from './wretcher';
 
-const factory = Wretcher.factory
-factory["default"] = Wretcher.factory
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const factory = Wretcher.factory;
+// eslint-disable-next-line @typescript-eslint/unbound-method
+factory['default'] = Wretcher.factory;
 
 /**
  * Return a fresh Wretcher instance.
  */
-export default factory
+export default factory;
